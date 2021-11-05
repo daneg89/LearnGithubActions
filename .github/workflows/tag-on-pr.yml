@@ -20,6 +20,8 @@ jobs:
       - name: Tag main
         run: |
           VERSION=`git describe --tags --abbrev=0 | awk -F. -v OFS=. '{print $NF+1}'`
+          git config --global user.email "auto-tagger@learningGHActions.com"
+          git config --global user.name "Auto Tagger"
           git tag -a dev-${VERSION} -m "tag check"
           git push origin dev-${VERSION}
 
