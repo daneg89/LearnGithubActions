@@ -1,3 +1,6 @@
+# Checks a given change on branch and creates a new tag with name related to the env
+# Has some bugs but is just a POC
+
 on:
   push:
     branches:
@@ -17,11 +20,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
+          # depth 0 will get us all the tags to refer to
+          fetch-depth: 0
           ref: 'main'
 
       - name: Tag main
         run: |
           # Naive command, expects at least one existing tag beforehand
+          # Also does not properly iterate version number between environments
           VERSION=`git describe --tags --abbrev=0 | awk -F. -v OFS=. '{print $NF+1}'`
 
           # Git command will fail without name/email for this
@@ -39,6 +45,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
+          fetch-depth: 0
           ref: 'staging'
 
       - name: Tag staging
@@ -61,6 +68,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
+          fetch-depth: 0
           ref: 'production'
 
       - name: Tag production
