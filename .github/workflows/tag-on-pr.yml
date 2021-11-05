@@ -28,7 +28,7 @@ jobs:
         run: |
           # Naive command, expects at least one existing tag beforehand
           # Also does not properly iterate version number between environments
-          VERSION=`git describe --tags --abbrev=0 | awk -F. -v OFS=. '{print $NF+1}'`
+          VERSION=0.`git describe --tags --abbrev=0 | awk -F. -v OFS=. '{print $NF+1}'`
 
           # Git command will fail without name/email for this
           git config --global user.email "auto-tagger@learningGHActions.com"
@@ -51,7 +51,7 @@ jobs:
       - name: Tag staging
         run: |
           # Naive command, expects at least one existing tag beforehand
-          VERSION=`git describe --tags --abbrev=0 | awk -F. -v OFS=. '{print $NF+1}'`
+          VERSION=0.`git describe --tags --abbrev=0 | awk -F. -v OFS=. '{print $NF+1}'`
 
           # Git command will fail without name/email for this
           git config --global user.email "auto-tagger@learningGHActions.com"
@@ -74,7 +74,7 @@ jobs:
       - name: Tag production
         run: |
           # Naive command, expects at least one existing tag beforehand
-          VERSION=`git describe --tags --abbrev=0 | awk -F. -v OFS=. '{print $NF+1}'`
+          VERSION=0.`git describe --tags --abbrev=0 | awk -F. -v OFS=. '{print $NF+1}'`
 
           # Git command will fail without name/email for this
           git config --global user.email "auto-tagger@learningGHActions.com"
