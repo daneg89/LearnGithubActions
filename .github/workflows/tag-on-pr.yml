@@ -19,10 +19,54 @@ jobs:
 
       - name: Tag main
         run: |
+          # Naive command, expects at least one existing tag beforehand
           VERSION=`git describe --tags --abbrev=0 | awk -F. -v OFS=. '{print $NF+1}'`
+
+          # Git command will fail without name/email for this
           git config --global user.email "auto-tagger@learningGHActions.com"
           git config --global user.name "Auto Tagger"
-          git tag -a dev-${VERSION} -m "tag check"
+
+          git tag -a dev-${VERSION} -m "tagged release automagically"
           git push origin dev-${VERSION}
+  tag-staging:
+    if: ${{ github.ref == 'refs/heads/staging' }}
+    name: Create tag for staging
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Tag staging
+        run: |
+          # Naive command, expects at least one existing tag beforehand
+          VERSION=`git describe --tags --abbrev=0 | awk -F. -v OFS=. '{print $NF+1}'`
+
+          # Git command will fail without name/email for this
+          git config --global user.email "auto-tagger@learningGHActions.com"
+          git config --global user.name "Auto Tagger"
+
+          git tag -a staging-${VERSION} -m "tagged release automagically"
+          git push origin staging-${VERSION}
+  tag-production:
+    if: ${{ github.ref == 'refs/heads/production' }}
+    name: Create tag for production
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Tag production
+        run: |
+          # Naive command, expects at least one existing tag beforehand
+          VERSION=`git describe --tags --abbrev=0 | awk -F. -v OFS=. '{print $NF+1}'`
+
+          # Git command will fail without name/email for this
+          git config --global user.email "auto-tagger@learningGHActions.com"
+          git config --global user.name "Auto Tagger"
+
+          git tag -a production-${VERSION} -m "tagged release automagically"
+          git push origin production-${VERSION}
 
 
